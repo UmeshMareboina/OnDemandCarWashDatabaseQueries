@@ -1,0 +1,131 @@
+
+create database CarWashDB
+
+CREATE TABLE [dbo].[CWUserProfile](
+    [UserId] [int] IDENTITY(1,1) NOT NULL,
+    [UserFirstName] [nvarchar](100) NOT NULL,
+    [UserLastName] [nvarchar](100) NOT NULL,
+    [UserEmail] [nvarchar](100) NOT NULL,
+    [UserMobileNumber] [varchar](50) NOT NULL,
+    [UserGender] [nvarchar](50) NOT NULL,
+    [UserRole] [nvarchar](50) NOT NULL,
+    [UserCreatedDate] [datetime] NULL,
+    [UserPassword] [nvarchar](250) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+    [UserId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+UNIQUE NONCLUSTERED 
+(
+    [UserEmail] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+UNIQUE NONCLUSTERED 
+(
+    [UserMobileNumber] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+
+CREATE TABLE [dbo].[CWAddress](
+    [AddressId] [int] IDENTITY(1,1) NOT NULL,
+    [UserId] [int] NULL,
+    [AddressLine1] [nvarchar](100) NOT NULL,
+    [AddressLine2] [nvarchar](100) NULL,
+    [AddressLandmark] [nvarchar](100) NOT NULL,
+    [AddressCity] [nvarchar](100) NOT NULL,
+    [AddressState] [nvarchar](100) NOT NULL,
+    [AddressPincode] [nvarchar](100) NOT NULL,
+    [CreatedDate] [datetime] NULL,
+PRIMARY KEY CLUSTERED 
+(
+    [AddressId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+
+CREATE TABLE [dbo].[CWCarRecords](
+    [CarId] [int] IDENTITY(1,1) NOT NULL,
+    [UserId] [int] NULL,
+    [CarCompany] [nvarchar](100) NOT NULL,
+    [CarModel] [nvarchar](100) NOT NULL,
+    [CarRegistrationNumber] [nvarchar](100) NOT NULL,
+    [CarColor] [nvarchar](100) NOT NULL,
+    [CreatedDate] [datetime] NULL,
+PRIMARY KEY CLUSTERED 
+(
+    [CarId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+UNIQUE NONCLUSTERED 
+(
+    [CarRegistrationNumber] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+
+CREATE TABLE [dbo].[CWPackage](
+    [PackageId] [int] IDENTITY(1,1) NOT NULL,
+    [PackageName] [nvarchar](100) NOT NULL,
+    [PackageDetails] [nvarchar](250) NOT NULL,
+    [PackageCost] [nvarchar](100) NOT NULL,
+    [CreatedDate] [datetime] NULL,
+PRIMARY KEY CLUSTERED 
+(
+    [PackageId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+CREATE TABLE [dbo].[CWPayment](
+    [PaymentId] [int] IDENTITY(1,1) NOT NULL,
+    [UserId] [int] NULL,
+    [PaymentMethods] [nvarchar](100) NOT NULL,
+    [CardHolderName] [nvarchar](100) NOT NULL,
+    [CardNumber] [nvarchar](100) NOT NULL,
+    [ExpiryDate] [nvarchar](20) NULL,
+    [PayAmountBill] [int] NOT NULL,
+    [Cvv] [int] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+    [PaymentId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+CREATE TABLE [dbo].[CWScheduleLater](
+    [SchedulelaterId] [int] IDENTITY(1,1) NOT NULL,
+    [SchedulelaterRequestTime] [datetime] NULL,
+    [SchedulelaterSelectedcar] [varchar](50) NULL,
+    [SchedulelaterCarLocation] [nvarchar](100) NOT NULL,
+    [PackageName] [nvarchar](100) NOT NULL,
+    [SchedulelaterWashNotes] [nvarchar](100) NULL,
+    [UsercreatedDate] [datetime] NULL,
+    [UserId] [int] NULL,
+PRIMARY KEY CLUSTERED 
+(
+    [SchedulelaterId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+
+CREATE TABLE [dbo].[CWWashNow](
+    [WashNowId] [int] IDENTITY(1,1) NOT NULL,
+    [UserId] [int] NULL,
+    [WashNowRequestTime] [datetime] NULL,
+    [WashNowSelectedCar] [varchar](50) NULL,
+    [WashNowCarLocation] [nvarchar](100) NOT NULL,
+    [PackageName] [nvarchar](100) NOT NULL,
+    [WashNowWashNotes] [nvarchar](100) NULL,
+    [CreatedDate] [datetime] NULL,
+    [RequestStatus] [varchar](20) NULL,
+PRIMARY KEY CLUSTERED 
+(
+    [WashNowId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+CREATE TABLE [dbo].[CWWashRequest](
+    [RequestId] [int] IDENTITY(1,1) NOT NULL,
+    [RequestTime] [datetime] NULL,
+    [WashNotes] [nvarchar](100) NULL,
+    [SelectedCar] [varchar](50) NULL,
+    [CarLocation] [nvarchar](100) NOT NULL,
+    [CreatedDate] [datetime] NULL,
+    [UserId] [int] NULL,
+    [PackageId] [int] NULL,
+PRIMARY KEY CLUSTERED 
+(
+    [RequestId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+
